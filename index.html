@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AN MAIL - Professional Mail Store</title>
+    <!-- Google Fonts & FontAwesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --bg-dark: #0f172a;
+            --card-bg: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #38bdf8;
+            --success: #22c55e;
+            --danger: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+        }
+
+        /* Navbar */
+        header {
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+            align-items: center;
+        }
+
+        nav ul li a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.3s;
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 6px;
+        }
+
+        nav ul li a:hover, nav ul li a.active {
+            color: var(--text-main);
+            background: rgba(37, 99, 235, 0.2);
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        /* Categories */
+        .categories {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 30px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+
+        .cat-btn {
+            background: var(--card-bg);
+            color: var(--text-muted);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.3s;
+        }
+
+        .cat-btn.active, .cat-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Grid Cards */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: 0.3s;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.2);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .card-badge {
+            font-size: 11px;
+            background: rgba(56, 189, 248, 0.15);
+            color: var(--accent);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .features-list {
+            list-style: none;
+            margin: 15px 0;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .features-list li {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .features-list li i {
+            color: var(--success);
+        }
+
+        .stock-counter {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .stock-counter span {
+            color: var(--success);
+            font-weight: 700;
+        }
+
+        /* Modal & Forms */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 450px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .modal-content h3 {
+            margin-bottom: 20px;
+            color: var(--text-main);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            margin-bottom: 5px;
+            color: var(--text-muted);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px 14px;
+            background: var(--bg-dark);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            color: white;
+            font-size: 14px;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            background: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 13px;
+        }
+
+        th {
+            background: rgba(255, 255, 255, 0.02);
+            color: var(--accent);
+        }
+
+        .badge-pending { color: #f59e0b; background: rgba(245, 158, 11, 0.15); padding: 3px 8px; border-radius: 4px; }
+        .badge-active { color: var(--success); background: rgba(34, 197, 94, 0.15); padding: 3px 8px; border-radius: 4px; }
+
+        /* Embedded Website Controller Styles for Gmail Codes */
+        #gmailCodesContainer { width: 100%; height: calc(100vh - 70px); position: relative; margin: 0; padding: 0; }
+        .black-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 96px; /* ১ ইঞ্চি সমান ৯৬ পিক্সেল ব্ল্যাক বার */
+            background-color: black;
+            z-index: 10;
+            pointer-events: none;
+        }
+        #targetIframe { width: 100%; height: 100%; border: none; }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <div class="logo-area">
+            <i class="fa-solid fa-envelope-circle-check"></i> AN MAIL
+        </div>
+        <nav>
+            <ul>
+                <li><a onclick="switchTab('home')" class="active" id="nav-home">Dashboard</a></li>
+                <li><a onclick="switchTab('orders')" id="nav-orders">Orders</a></li>
+                <li><a onclick="switchTab('codes')" id="nav-codes">Gmail Codes</a></li>
+                <li><a onclick="openAdminModal()" id="nav-admin" style="color: var(--accent);">Admin Panel</a></li>
+            </ul>
+        </nav>
+        <div class="user-menu" id="userMenuSection">
+            <button class="btn" onclick="openAuthModal('login')">Login / Register</button>
+        </div>
+    </header>
+
+    <!-- Main Container (Dashboard) -->
+    <div class="container" id="mainContainer">
+        <div class="categories">
+            <button class="cat-btn active" onclick="filterCategory('MAIL.ULTRA')"><i class="fa-solid fa-box"></i> MAIL.ULTRA</button>
+            <button class="cat-btn" onclick="filterCategory('MAIL.PRO')"><i class="fa-solid fa-box"></i> MAIL.PRO</button>
+            <button class="cat-btn" onclick="filterCategory('MAIL.PLUS')"><i class="fa-solid fa-box"></i> MAIL.PLUS</button>
+            <button class="cat-btn" onclick="filterCategory('MAIL.NORMAL')"><i class="fa-solid fa-box"></i> MAIL.NORMAL</button>
+        </div>
+        <div class="product-grid" id="productGrid"></div>
+    </div>
+
+    <!-- Gmail Codes Embedded Section (আপনার দেওয়া কন্ট্রোলার কোড) -->
+    <div id="gmailCodesContainer" class="hidden">
+        <div class="black-bar"></div>
+        <iframe id="targetIframe" src=""></iframe>
+    </div>
+
+    <!-- Orders Section -->
+    <div class="container hidden" id="ordersContainer">
+        <h2>My Purchase History</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Purchased Mail</th>
+                    <th>Date & Time</th>
+                </tr>
+            </thead>
+            <tbody id="ordersTableBody"></tbody>
+        </table>
+    </div>
+
+    <!-- Auth Modal -->
+    <div class="modal" id="authModal">
+        <div class="modal-content">
+            <h3 id="authTitle">User Login</h3>
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" id="authUsername" class="form-control" placeholder="Enter username">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="authPassword" class="form-control" placeholder="Enter password">
+            </div>
+            <button class="btn" style="width: 100%;" onclick="handleAuthSubmit()">Submit</button>
+            <p style="text-align: center; margin-top: 15px; font-size: 13px; color: var(--text-muted); cursor: pointer;" onclick="toggleAuthMode()" id="authSwitchText">Don't have an account? Register</p>
+        </div>
+    </div>
+
+    <!-- Admin Password Modal (Hidden Password Input) -->
+    <div class="modal" id="adminModal">
+        <div class="modal-content">
+            <h3>Admin Panel Access</h3>
+            <div class="form-group">
+                <label>Enter Admin Password</label>
+                <input type="password" id="adminPassInput" class="form-control" placeholder="••••••••" autocomplete="new-password">
+            </div>
+            <button class="btn" style="width: 100%;" onclick="verifyAdmin()">Login to Admin Panel</button>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard Modal -->
+    <div class="modal" id="adminDashboardModal" style="align-items: flex-start; overflow-y: auto; padding: 30px 0;">
+        <div class="modal-content" style="max-width: 900px; margin: auto;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h3>Admin Dashboard</h3>
+                <button class="btn" style="background: var(--danger);" onclick="closeAdminDashboard()">Close</button>
+            </div>
+            
+            <h4 style="margin-bottom: 10px; color: var(--accent);">User Management & Total Purchases</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Total Buy Count</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="adminUsersTable"></tbody>
+            </table>
+
+            <h4 style="margin-top: 30px; margin-bottom: 10px; color: var(--accent);">Upload Stock Mails</h4>
+            <div class="form-group">
+                <label>Select Category</label>
+                <select id="uploadCategory" class="form-control">
+                    <option value="MAIL.ULTRA">MAIL.ULTRA</option>
+                    <option value="MAIL.PRO">MAIL.PRO</option>
+                    <option value="MAIL.PLUS">MAIL.PLUS</option>
+                    <option value="MAIL.NORMAL">MAIL.NORMAL</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Paste Mails (One per line)</label>
+                <textarea id="bulkMails" class="form-control" rows="4" placeholder="email|pass|token|id"></textarea>
+            </div>
+            <button class="btn" onclick="uploadStockMails()">Upload Stock</button>
+        </div>
+    </div>
+
+    <!-- Script Section -->
+    <script>
+        if (!localStorage.getItem('an_users')) {
+            localStorage.setItem('an_users', JSON.stringify([{username: 'admin', pass: 'admin123', status: 'Active', role: 'admin'}]));
+        }
+        if (!localStorage.getItem('an_stock')) {
+            localStorage.setItem('an_stock', JSON.stringify({
+                'MAIL.ULTRA': ["test1@gmail.com|pass1|token1|id1"],
+                'MAIL.PRO': [],
+                'MAIL.PLUS': [],
+                'MAIL.NORMAL': []
+            }));
+        }
+        if (!localStorage.getItem('an_orders')) {
+            localStorage.setItem('an_orders', JSON.stringify([]));
+        }
+
+        let currentUser = JSON.parse(localStorage.getItem('an_current_user')) || null;
+        let isRegisterMode = false;
+        let currentSelectedCategory = 'MAIL.ULTRA';
+
+        function initApp() {
+            renderNavbarUser();
+            renderProducts(currentSelectedCategory);
+        }
+
+        function renderNavbarUser() {
+            const menu = document.getElementById('userMenuSection');
+            if (currentUser) {
+                menu.innerHTML = `<span style="font-size: 14px; color: var(--accent);">Hi, ${currentUser.username}</span> <button class="btn" style="background: var(--danger);" onclick="logout()">Logout</button>`;
+            } else {
+                menu.innerHTML = `<button class="btn" onclick="openAuthModal('login')">Login / Register</button>`;
+            }
+        }
+
+        function switchTab(tab) {
+            document.querySelectorAll('nav ul li a').forEach(el => el.classList.remove('active'));
+            document.getElementById('mainContainer').classList.add('hidden');
+            document.getElementById('gmailCodesContainer').classList.add('hidden');
+            document.getElementById('ordersContainer').classList.add('hidden');
+
+            if (tab === 'home') {
+                document.getElementById('nav-home').classList.add('active');
+                document.getElementById('mainContainer').classList.remove('hidden');
+            } else if (tab === 'codes') {
+                document.getElementById('nav-codes').classList.add('active');
+                
+                // আপনার রিকোয়ারমেন্ট অনুযায়ী জিমেইল কোড এ ক্লিক করলে ইফ্রেমে ওয়েবসাইট লোড হবে এবং আগের সব কন্টেন্ট হাইড হয়ে যাবে
+                const container = document.getElementById('gmailCodesContainer');
+                container.classList.remove('hidden');
+                document.getElementById('targetIframe').src = 'https://www.hotmail143.com/gmail-codes.php';
+
+            } else if (tab === 'orders') {
+                document.getElementById('nav-orders').classList.add('active');
+                document.getElementById('ordersContainer').classList.remove('hidden');
+                renderOrders();
+            }
+        }
+
+        function filterCategory(cat) {
+            currentSelectedCategory = cat;
+            document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            renderProducts(cat);
+        }
+
+        function renderProducts(cat) {
+            const stock = JSON.parse(localStorage.getItem('an_stock'))[cat] || [];
+            const grid = document.getElementById('productGrid');
+            
+            grid.innerHTML = `
+                <div class="card">
+                    <div>
+                        <div class="card-header">
+                            <span class="card-title">${cat}</span>
+                            <span class="card-badge">Premium</span>
+                        </div>
+                        <ul class="features-list">
+                            <li><i class="fa-solid fa-check"></i> High Quality & Secure</li>
+                            <li><i class="fa-solid fa-check"></i> Instant Delivery</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <div class="stock-counter">Stock: <span>${stock.length} Available</span></div>
+                        <button class="btn" style="width: 100%;" onclick="buyMail('${cat}')">Buy Now</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function buyMail(cat) {
+            if (!currentUser) { alert("Please login first!"); openAuthModal('login'); return; }
+            if (currentUser.status !== 'Active') { alert("Your account is Pending approval from Admin!"); return; }
+
+            let stock = JSON.parse(localStorage.getItem('an_stock'));
+            if (!stock[cat] || stock[cat].length === 0) { alert("Stock out!"); return; }
+
+            let purchasedMail = stock[cat].shift();
+            localStorage.setItem('an_stock', JSON.stringify(stock));
+
+            let orders = JSON.parse(localStorage.getItem('an_orders'));
+            let orderData = { username: currentUser.username, category: cat, mail: purchasedMail, date: new Date().toLocaleString() };
+            orders.push(orderData);
+            localStorage.setItem('an_orders', JSON.stringify(orders));
+
+            alert(`Successfully Purchased!\n\nMail String:\n${purchasedMail}\n\n(Copied to Clipboard)`);
+            navigator.clipboard.writeText(purchasedMail);
+            renderProducts(cat);
+        }
+
+        function openAuthModal(mode) {
+            isRegisterMode = (mode === 'register');
+            document.getElementById('authTitle').innerText = isRegisterMode ? 'User Registration' : 'User Login';
+            document.getElementById('authSwitchText').innerText = isRegisterMode ? 'Already have an account? Login' : "Don't have an account? Register";
+            document.getElementById('authModal').style.display = 'flex';
+        }
+
+        function toggleAuthMode() {
+            isRegisterMode = !isRegisterMode;
+            document.getElementById('authTitle').innerText = isRegisterMode ? 'User Registration' : 'User Login';
+            document.getElementById('authSwitchText').innerText = isRegisterMode ? 'Already have an account? Login' : "Don't have an account? Register";
+        }
+
+        function handleAuthSubmit() {
+            const u = document.getElementById('authUsername').value.trim();
+            const p = document.getElementById('authPassword').value.trim();
+            if (!u || !p) { alert("Fill all fields!"); return; }
+
+            let users = JSON.parse(localStorage.getItem('an_users'));
+            if (isRegisterMode) {
+                if (users.find(x => x.username === u)) { alert("Username exists!"); return; }
+                users.push({ username: u, pass: p, status: 'Pending', role: 'user' });
+                localStorage.setItem('an_users', JSON.stringify(users));
+                alert("Registration successful! Wait for Admin approval.");
+                document.getElementById('authModal').style.display = 'none';
+            } else {
+                let found = users.find(x => x.username === u && x.pass === p);
+                if (found) {
+                    if (found.status === 'Pending' && found.role !== 'admin') { alert("Account is Pending!"); return; }
+                    currentUser = found;
+                    localStorage.setItem('an_current_user', JSON.stringify(currentUser));
+                    document.getElementById('authModal').style.display = 'none';
+                    renderNavbarUser();
+                    alert("Login successful!");
+                } else { alert("Invalid credentials!"); }
+            }
+        }
+
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('an_current_user');
+            renderNavbarUser();
+            alert("Logged out.");
+        }
+
+        function openAdminModal() { document.getElementById('adminModal').style.display = 'flex'; }
+
+        function verifyAdmin() {
+            const pass = document.getElementById('adminPassInput').value;
+            if (pass === 'anfastotp') {
+                document.getElementById('adminModal').style.display = 'none';
+                document.getElementById('adminPassInput').value = '';
+                openAdminDashboard();
+            } else { alert("Incorrect Admin Password!"); }
+        }
+
+        function openAdminDashboard() {
+            renderAdminUsers();
+            document.getElementById('adminDashboardModal').style.display = 'flex';
+        }
+
+        function closeAdminDashboard() { document.getElementById('adminDashboardModal').style.display = 'none'; }
+
+        function renderAdminUsers() {
+            let users = JSON.parse(localStorage.getItem('an_users'));
+            let orders = JSON.parse(localStorage.getItem('an_orders')) || [];
+            let tbody = document.getElementById('adminUsersTable');
+            tbody.innerHTML = '';
+            
+            users.forEach((usr, idx) => {
+                if(usr.role === 'admin') return;
+                let userBuyCount = orders.filter(o => o.username === usr.username).length;
+                
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${usr.username}</td>
+                        <td><strong style="color: var(--accent);">${userBuyCount} Mails</strong></td>
+                        <td><span class="${usr.status === 'Active' ? 'badge-active' : 'badge-pending'}">${usr.status}</span></td>
+                        <td>
+                            ${usr.status === 'Pending' ? `<button class="btn" style="padding: 4px 8px;" onclick="changeUserStatus(${idx}, 'Active')">Accept</button>` : ''}
+                            <button class="btn" style="padding: 4px 8px; background: var(--danger);" onclick="changeUserStatus(${idx}, 'Delete')">Reject</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function changeUserStatus(index, action) {
+            let users = JSON.parse(localStorage.getItem('an_users'));
+            if (action === 'Active') { users[index].status = 'Active'; }
+            else { users.splice(index, 1); }
+            localStorage.setItem('an_users', JSON.stringify(users));
+            renderAdminUsers();
+        }
+
+        function uploadStockMails() {
+            const cat = document.getElementById('uploadCategory').value;
+            const text = document.getElementById('bulkMails').value.trim();
+            if (!text) { alert("Paste mails!"); return; }
+
+            let lines = text.split('\n').filter(x => x.trim() !== '');
+            let stock = JSON.parse(localStorage.getItem('an_stock'));
+            stock[cat] = (stock[cat] || []).concat(lines);
+            localStorage.setItem('an_stock', JSON.stringify(stock));
+
+            document.getElementById('bulkMails').value = '';
+            alert(`Uploaded ${lines.length} mails to ${cat}!`);
+            renderProducts(currentSelectedCategory);
+        }
+
+        function renderOrders() {
+            let orders = JSON.parse(localStorage.getItem('an_orders')) || [];
+            let tbody = document.getElementById('ordersTableBody');
+            tbody.innerHTML = '';
+            orders.forEach(ord => {
+                if(currentUser && ord.username === currentUser.username) {
+                    tbody.innerHTML += `
+                        <tr>
+                            <td>${ord.category}</td>
+                            <td>${ord.mail}</td>
+                            <td>${ord.date}</td>
+                        </tr>
+                    `;
+                }
+            });
+        }
+
+        window.onload = initApp;
+    </script>
+</body>
+</html>
