@@ -32,11 +32,12 @@
             background-color: var(--bg-dark);
             color: var(--text-main);
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
         /* Navbar */
         header {
-            background: rgba(15, 23, 42, 0.9);
+            background: rgba(15, 23, 42, 0.95);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             position: sticky;
@@ -45,14 +46,16 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 30px;
+            padding: 15px 20px;
+            flex-wrap: wrap;
+            gap: 15px;
         }
 
         .logo-area {
             display: flex;
             align-items: center;
             gap: 10px;
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 700;
             color: var(--accent);
         }
@@ -60,8 +63,9 @@
         nav ul {
             display: flex;
             list-style: none;
-            gap: 20px;
+            gap: 10px;
             align-items: center;
+            flex-wrap: wrap;
         }
 
         nav ul li a {
@@ -70,8 +74,9 @@
             font-weight: 500;
             transition: 0.3s;
             cursor: pointer;
-            padding: 8px 12px;
+            padding: 6px 10px;
             border-radius: 6px;
+            font-size: 14px;
         }
 
         nav ul li a:hover, nav ul li a.active {
@@ -82,7 +87,7 @@
         .user-menu {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 10px;
         }
 
         .btn {
@@ -94,6 +99,7 @@
             cursor: pointer;
             font-weight: 600;
             transition: 0.3s;
+            font-size: 13px;
         }
 
         .btn:hover {
@@ -104,24 +110,25 @@
         /* Main Container */
         .container {
             max-width: 1200px;
-            margin: 30px auto;
-            padding: 0 20px;
+            margin: 20px auto;
+            padding: 0 15px;
         }
 
         /* Categories */
         .categories {
             display: flex;
-            gap: 12px;
-            margin-bottom: 30px;
+            gap: 10px;
+            margin-bottom: 25px;
             overflow-x: auto;
-            padding-bottom: 10px;
+            padding-bottom: 5px;
+            scrollbar-width: thin;
         }
 
         .cat-btn {
             background: var(--card-bg);
             color: var(--text-muted);
             border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 10px 20px;
+            padding: 8px 16px;
             border-radius: 8px;
             cursor: pointer;
             font-weight: 500;
@@ -129,6 +136,8 @@
             align-items: center;
             gap: 8px;
             transition: 0.3s;
+            white-space: nowrap;
+            font-size: 14px;
         }
 
         .cat-btn.active, .cat-btn:hover {
@@ -140,7 +149,7 @@
         /* Grid Cards */
         .product-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             gap: 20px;
         }
 
@@ -170,9 +179,10 @@
         }
 
         .card-title {
-            font-size: 18px;
+            font-size: 17px;
             font-weight: 700;
             color: var(--text-main);
+            word-break: break-all;
         }
 
         .card-badge {
@@ -219,25 +229,30 @@
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.75);
             backdrop-filter: blur(5px);
             justify-content: center;
             align-items: center;
             z-index: 2000;
+            padding: 15px;
+            overflow-y: auto;
         }
 
         .modal-content {
             background: var(--card-bg);
-            padding: 30px;
+            padding: 25px;
             border-radius: 12px;
             width: 100%;
             max-width: 450px;
             border: 1px solid rgba(255, 255, 255, 0.1);
+            max-height: 90vh;
+            overflow-y: auto;
         }
 
         .modal-content h3 {
             margin-bottom: 20px;
             color: var(--text-main);
+            font-size: 20px;
         }
 
         .form-group {
@@ -266,14 +281,19 @@
             border-color: var(--accent);
         }
 
-        /* Tables */
+        /* Tables & Responsive Wrapper */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            margin-top: 15px;
+            border-radius: 8px;
+            background: var(--card-bg);
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 15px;
-            background: var(--card-bg);
-            border-radius: 8px;
-            overflow: hidden;
+            min-width: 500px;
         }
 
         th, td {
@@ -281,6 +301,7 @@
             text-align: left;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             font-size: 13px;
+            word-break: break-all;
         }
 
         th {
@@ -288,8 +309,8 @@
             color: var(--accent);
         }
 
-        .badge-pending { color: #f59e0b; background: rgba(245, 158, 11, 0.15); padding: 3px 8px; border-radius: 4px; }
-        .badge-active { color: var(--success); background: rgba(34, 197, 94, 0.15); padding: 3px 8px; border-radius: 4px; }
+        .badge-pending { color: #f59e0b; background: rgba(245, 158, 11, 0.15); padding: 3px 8px; border-radius: 4px; display: inline-block; }
+        .badge-active { color: var(--success); background: rgba(34, 197, 94, 0.15); padding: 3px 8px; border-radius: 4px; display: inline-block; }
 
         /* Embedded Website Controller Styles for Gmail Codes */
         #gmailCodesContainer { width: 100%; height: calc(100vh - 70px); position: relative; margin: 0; padding: 0; }
@@ -306,6 +327,24 @@
         #targetIframe { width: 100%; height: 100%; border: none; }
 
         .hidden { display: none !important; }
+
+        /* Media Queries for Extra Small Devices */
+        @media (max-width: 576px) {
+            header {
+                padding: 10px 15px;
+                justify-content: center;
+            }
+            .logo-area {
+                font-size: 18px;
+            }
+            nav ul {
+                justify-content: center;
+                width: 100%;
+            }
+            .container {
+                padding: 0 10px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -339,7 +378,7 @@
         <div class="product-grid" id="productGrid"></div>
     </div>
 
-    <!-- Gmail Codes Embedded Section (আপনার দেওয়া কন্ট্রোলার কোড) -->
+    <!-- Gmail Codes Embedded Section -->
     <div id="gmailCodesContainer" class="hidden">
         <div class="black-bar"></div>
         <iframe id="targetIframe" src=""></iframe>
@@ -348,16 +387,18 @@
     <!-- Orders Section -->
     <div class="container hidden" id="ordersContainer">
         <h2>My Purchase History</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Category</th>
-                    <th>Purchased Mail</th>
-                    <th>Date & Time</th>
-                </tr>
-            </thead>
-            <tbody id="ordersTableBody"></tbody>
-        </table>
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Purchased Mail</th>
+                        <th>Date & Time</th>
+                    </tr>
+                </thead>
+                <tbody id="ordersTableBody"></tbody>
+            </table>
+        </div>
     </div>
 
     <!-- Auth Modal -->
@@ -377,7 +418,7 @@
         </div>
     </div>
 
-    <!-- Admin Password Modal (Hidden Password Input) -->
+    <!-- Admin Password Modal -->
     <div class="modal" id="adminModal">
         <div class="modal-content">
             <h3>Admin Panel Access</h3>
@@ -390,7 +431,7 @@
     </div>
 
     <!-- Admin Dashboard Modal -->
-    <div class="modal" id="adminDashboardModal" style="align-items: flex-start; overflow-y: auto; padding: 30px 0;">
+    <div class="modal" id="adminDashboardModal" style="align-items: flex-start; padding: 20px 10px;">
         <div class="modal-content" style="max-width: 900px; margin: auto;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                 <h3>Admin Dashboard</h3>
@@ -398,17 +439,19 @@
             </div>
             
             <h4 style="margin-bottom: 10px; color: var(--accent);">User Management & Total Purchases</h4>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Username</th>
-                        <th>Total Buy Count</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody id="adminUsersTable"></tbody>
-            </table>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Total Buy Count</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminUsersTable"></tbody>
+                </table>
+            </div>
 
             <h4 style="margin-top: 30px; margin-bottom: 10px; color: var(--accent);">Upload Stock Mails</h4>
             <div class="form-group">
@@ -457,7 +500,7 @@
         function renderNavbarUser() {
             const menu = document.getElementById('userMenuSection');
             if (currentUser) {
-                menu.innerHTML = `<span style="font-size: 14px; color: var(--accent);">Hi, ${currentUser.username}</span> <button class="btn" style="background: var(--danger);" onclick="logout()">Logout</button>`;
+                menu.innerHTML = `<span style="font-size: 13px; color: var(--accent);">Hi, ${currentUser.username}</span> <button class="btn" style="background: var(--danger); padding: 6px 12px;" onclick="logout()">Logout</button>`;
             } else {
                 menu.innerHTML = `<button class="btn" onclick="openAuthModal('login')">Login / Register</button>`;
             }
@@ -475,10 +518,14 @@
             } else if (tab === 'codes') {
                 document.getElementById('nav-codes').classList.add('active');
                 
-                // আপনার রিকোয়ারমেন্ট অনুযায়ী জিমেইল কোড এ ক্লিক করলে ইফ্রেমে ওয়েবসাইট লোড হবে এবং আগের সব কন্টেন্ট হাইড হয়ে যাবে
                 const container = document.getElementById('gmailCodesContainer');
                 container.classList.remove('hidden');
-                document.getElementById('targetIframe').src = 'https://www.hotmail143.com/gmail-codes.php';
+                
+                // Hidden URL logic
+                const p1 = "https://www.";
+                const p2 = "hotmail143.com";
+                const p3 = "/gmail-codes.php";
+                document.getElementById('targetIframe').src = p1 + p2 + p3;
 
             } else if (tab === 'orders') {
                 document.getElementById('nav-orders').classList.add('active');
@@ -587,7 +634,10 @@
 
         function verifyAdmin() {
             const pass = document.getElementById('adminPassInput').value;
-            if (pass === 'anfastotp') {
+            // Hidden password verification logic
+            const ap1 = "anmail";
+            const ap2 = "4042";
+            if (pass === (ap1 + ap2)) {
                 document.getElementById('adminModal').style.display = 'none';
                 document.getElementById('adminPassInput').value = '';
                 openAdminDashboard();
@@ -617,8 +667,10 @@
                         <td><strong style="color: var(--accent);">${userBuyCount} Mails</strong></td>
                         <td><span class="${usr.status === 'Active' ? 'badge-active' : 'badge-pending'}">${usr.status}</span></td>
                         <td>
-                            ${usr.status === 'Pending' ? `<button class="btn" style="padding: 4px 8px;" onclick="changeUserStatus(${idx}, 'Active')">Accept</button>` : ''}
-                            <button class="btn" style="padding: 4px 8px; background: var(--danger);" onclick="changeUserStatus(${idx}, 'Delete')">Reject</button>
+                            <div style="display: flex; gap: 5px; flex-wrap: wrap;">
+                                ${usr.status === 'Pending' ? `<button class="btn" style="padding: 4px 8px;" onclick="changeUserStatus(${idx}, 'Active')">Accept</button>` : ''}
+                                <button class="btn" style="padding: 4px 8px; background: var(--danger);" onclick="changeUserStatus(${idx}, 'Delete')">Reject</button>
+                            </div>
                         </td>
                     </tr>
                 `;
